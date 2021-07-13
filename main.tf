@@ -128,7 +128,12 @@ resource "ibm_is_security_group_rule" "sg1_tcp_rule_80" {
   }
 }
 
-resource "ibm_is_floating_ip" "floatingip3" {
-  name = "fip3"
-  target = "${ibm_is_instance.instance3.primary_network_interface.0.id}"
+resource "ibm_is_security_group_rule" "sg1_tcp_rule_443" {
+  group     = "${ibm_is_vpc.vpc1.default_security_group}"
+  direction = "inbound"
+  remote    = "0.0.0.0/0"
+  tcp = {
+    port_min = "443"
+    port_max = "443"
+  }
 }
